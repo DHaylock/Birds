@@ -1,0 +1,13 @@
+{
+  "where": "Watershed",
+  "serialname":"/dev/tty.usbmodem1421",
+  "baudrate": 115200,
+  "threshold": 25,
+  "log": true,
+  "post": true,
+  "url":"https://davidhaylock.co.uk/birds/data.php",
+  "secret":"jfapoi4uf[a0j[aien",
+  "statictimerlength": 3,
+  "ramptimerlength": 3,
+  "logtimerlength": 3
+}

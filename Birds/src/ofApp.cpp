@@ -27,6 +27,8 @@ void ofApp::exit() {
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+	ofSetDataPathRoot("../Resources/data/");
+	
 	// Load the Config File
 	ofxJSONElement config;
 	if(!config.open(ofToDataPath("config.json"))) {

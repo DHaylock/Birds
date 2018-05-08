@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 const {Pool, Client} = require('pg');
 const path = require('path');
-const connectionString = connectionString || 'postgres://localhost:5432/david';
+const connectionString = connectionString || 'postgres://***REMOVED***:***REMOVED***@***REMOVED***:5432/***REMOVED***';
 const nodemailer = require('nodemailer');
 const dateTime = require('node-datetime');
 var copyTo = require('pg-copy-streams').to;
 
 
 const pool = new Pool({
-    // user: '',
-    // host: '',
-    // database: '',
-    // password: '',
-    // port: 0,
+    user: '***REMOVED***',
+    host: '***REMOVED***',
+    database: '***REMOVED***',
+    password: '***REMOVED***',
+    port: 5432,
     connectionString: connectionString
 });
 
@@ -23,51 +23,23 @@ const pool = new Pool({
 function emailCsvToOwner(address) {
     console.log("Starting to Email");
 
-    nodemailer.createTestAccount((err,account) => {
+    var dt = dateTime.create();
+    var formatted = dt.format('Y-m-d');
+    var directory = __dirname + "/"+formatted+".csv";
 
-        if(err) {
-            console.error('Failed to create a testing account. ' + err.message);
-            return process.exit(1);
-        }
+    var send = require('gmail-send') ({
+        user: "***REMOVED***",
+        pass: "***REMOVED***",
+        to: "***REMOVED***",
+        subject: "New Info",
+        text:"Here is Yesterday's Data",
+    });
 
-        console.log('Credentials obtained, sending message...');
 
-        var dt = dateTime.create();
-        var formatted = dt.format('Y-m-d H:M:S');
-
-        let transporter = nodemailer.createTransport( {
-            host: account.smtp.host,
-            port: account.smtp.port,
-            secure: account.smtp.secure,
-            auth: {
-                user: account.user,
-                pass: account.pass
-            }
-        });
-
-        var dt = dateTime.create();
-        var formatted = dt.format('Y-m-d');
-        var directory = __dirname + "/"+formatted+".csv";
-
-        let message = {
-            from: 'Monitorer <me@davidhaylock.co.uk>',
-            to: 'David  <***REMOVED***>',
-            //to: 'Angela <angeladaviesartist@gmail.com>',
-            subject: formatted + " Data",
-            text: "Here is yesterday's data.",
-            attachments: [{
-                path: directory
-            }]
-        };
-        
-        transporter.sendMail(message, (err, info) => {
-            if(err) {
-                console.log('Error occurred. ' + err.message);
-                return process.exit(1);
-            }
-            console.log('Message sent: %s', info.messageId);
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-        });
+    send({    
+        files:[directory]
+    },function(err,res) {
+        console.log(err,res);
     });
 }
 
@@ -75,16 +47,16 @@ function emailCsvToOwner(address) {
 // * Check the Size of the Database
 //----------------------------------------------------------------
 function truncateTable() {
-
     console.log("Cleaning DB");
 
-    const truncate = pool.query('TRUNCATE TABLE logs')
-    .then( res => {
-        console.log("Success");
-        return "Cleaned";
-    })
-    .catch(e => console.log(e.stack))
-    pool.end()
+    pool.query('TRUNCATE TABLE logs', (err,result) => {
+        if(err) {
+            return console.log({failed: err});
+        }
+
+        return console.log({success: "Truncated Table"});
+        pool.end()
+    }); 
 }
 
 //----------------------------------------------------------------
@@ -96,15 +68,18 @@ router.post('/api/v1/downloaddata', (req,res,next) => {
     var formatted = dt.format('Y-m-d');
     var directory = __dirname + "/"+formatted+".csv";
     
-    pool.query( "\copy logs TO '"+directory+"' CSV HEADER" )
-    .then( res => {
-        console.log("Downloaded File");
+    pool.query( "\copy logs TO '"+directory+"' CSV HEADER", (err,result) => {
+        if(err) {
+            console.log(err);
+            return res.json({failed: err})
+        }
+        
+        console.log(result + " Downloaded File");
         setImmediate(emailCsvToOwner,1500,"");
         setTimeout(truncateTable,1500);
+        return res.json({success: "Downloaded"});
         pool.end()
-    })
-    .catch( e => console.log(e) ); 
-    
+    });
 });
 
 //----------------------------------------------------------------
@@ -125,17 +100,15 @@ router.post('/api/v1/log', (req,res,next) => {
         values: [data.event,data.where,data.volume]
     };
 
-    pool.query(query, (err,res) => {
+    pool.query(query,(err,result) => {
         if(err) {
             console.log(err);
-            return err;
+            return res.json({failed: err});
         }
-        
-        pool.end();
-        console.log(res);
-        return res;
-    });
 
+        return res.json({success: "Inserted"});
+        pool.end();
+    });
 });
 
 //----------------------------------------------------------------
@@ -154,7 +127,6 @@ router.get('/api/v1/get', (req,res,next) => {
 
     pool.query(query)
     .then(result => {
-        console.log(result.rows);
         return res.json(result.rows);
         pool.end()
     })

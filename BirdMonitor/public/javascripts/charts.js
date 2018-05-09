@@ -10,7 +10,7 @@ var place = "Watershed";
 //--------------------------------------------------------------------
 // * GET the stuff
 //--------------------------------------------------------------------
-$.getJSON("http://localhost:3000/api/v1/get?where=" +place, function(json) {
+$.getJSON("./api/v1/get?where=" +place, function(json) {
     // console.log(json);
     $.each(json,function(key,data) {
 

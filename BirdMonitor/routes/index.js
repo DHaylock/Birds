@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const {Pool, Client} = require('pg');
 const path = require('path');
-const connectionString = connectionString || 'postgres://***REMOVED***:***REMOVED***@***REMOVED***:5432/***REMOVED***';
+const connectionString = connectionString || 'postgres://<>:***REMOVED***@:5432/***REMOVED***';
 const nodemailer = require('nodemailer');
 const dateTime = require('node-datetime');
 var copyTo = require('pg-copy-streams').to;
 
 
 const pool = new Pool({
-    user: '***REMOVED***',
-    host: '***REMOVED***',
+    user: '<>',
+    host: '',
     database: '***REMOVED***',
     password: '***REMOVED***',
     port: 5432,

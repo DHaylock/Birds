@@ -5,6 +5,8 @@
 
 Description of Project Here
 
+![https://github.com/DHaylock/Birds](docs/images/working.gif)
+
 ### Index
 
 Click the following to go to the relevant section

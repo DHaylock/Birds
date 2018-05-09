@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const {Pool, Client} = require('pg');
 const path = require('path');
-const connectionString = connectionString || 'postgres://<>:***REMOVED***@:5432/***REMOVED***';
+const connectionString = connectionString || ''connectionString'';
 const nodemailer = require('nodemailer');
 const dateTime = require('node-datetime');
 var copyTo = require('pg-copy-streams').to;
 
 
 const pool = new Pool({
-    user: '<>',
-    host: '',
-    database: '***REMOVED***',
-    password: '***REMOVED***',
+    user: 'user',
+    host: 'host',
+    database: 'database',
+    password: 'password',
     port: 5432,
     connectionString: connectionString
 });
@@ -28,9 +28,9 @@ function emailCsvToOwner(address) {
     var directory = __dirname + "/"+formatted+".csv";
 
     var send = require('gmail-send') ({
-        user: "***REMOVED***",
-        pass: "***REMOVED***",
-        to: "***REMOVED***",
+        user: "sendemailfromaddress",
+        pass: "emailpassword",
+        to: "sendemailtoaddress",
         subject: "New Info",
         text:"Here is Yesterday's Data",
     });

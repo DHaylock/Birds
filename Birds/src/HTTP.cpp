@@ -26,9 +26,13 @@ void HTTP::post(TYPE t,float value) {
 	
 	switch (t) {
 		case ON: {
+			
+			string alteredurl = url.substr(0,url.size() - 3);
+			alteredurl += "downloaddata";
+		
 			// We are Logging to the Server
 			ofxHttpForm formIn;
-			formIn.action = url;
+			formIn.action = alteredurl;
 			formIn.method = OFX_HTTP_POST;
 			formIn.addFormField("where", where);
 			formIn.addFormField("when", ofGetTimestampString("%Y-%m-%d-%H-%M-%S"));

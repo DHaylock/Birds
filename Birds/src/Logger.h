@@ -27,7 +27,7 @@ class Logger {
 		 @param value value
 		 */
 		//--------------------------------------------------------------
-		void addLog(float value);
+		void addLog(float value,string event);
 	
 		//--------------------------------------------------------------
 		/**

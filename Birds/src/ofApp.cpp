@@ -81,6 +81,9 @@ void ofApp::setup(){
 	if(bCanPost)
 		HTTP::instance().setup(url, secret, where);
 	
+	if (bCanLog)
+		Logger::instance().addLog(audioManager.getSmoothedVolume(),"On");
+	
 	if(bCanLog || bCanPost) {
 		logTimer.setup((1000*logTimerLength), "Log", true);
 		ofAddListener(logTimer.timerFinished, this, &ofApp::logTimerFinished);
@@ -114,6 +117,9 @@ void ofApp::update(){
 				rampTimer.start();
 				if(bCanPost)
 					HTTP::instance().post(ACTIVATED,audioManager.getSmoothedVolume());
+				
+				if (bCanLog)
+					Logger::instance().addLog(audioManager.getSmoothedVolume(),"Activated");
 			}
 		}
 			break;
@@ -266,7 +272,7 @@ void ofApp::rampTimerFinished(std::string &val) {
 //--------------------------------------------------------------
 void ofApp::logTimerFinished(std::string &val) {
 	if (bCanLog)
-		Logger::instance().addLog(audioManager.getSmoothedVolume());
+		Logger::instance().addLog(audioManager.getSmoothedVolume(),"Log");
 	
 	if (bCanPost)
 		HTTP::instance().post(LOG,audioManager.getSmoothedVolume());

@@ -15,6 +15,10 @@ cd /home/pi/openFrameworks/apps/myApps/Birds/bin/
 ./Birds & # Non Blocking
 ```
 
+### Stopping the Program
+
+To Stop the program you'll need to do it via the command line
+
 ### Manually running
 
 If you want to manually start the program.

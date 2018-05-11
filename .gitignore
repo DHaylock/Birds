@@ -117,3 +117,5 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 passwords.txt
+
+BirdMonitor.bfg*

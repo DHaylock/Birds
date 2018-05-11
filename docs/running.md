@@ -17,7 +17,25 @@ cd /home/pi/openFrameworks/apps/myApps/Birds/bin/
 
 ### Stopping the Program
 
-To Stop the program you'll need to do it via the command line
+To Stop the program you'll need to do it via the command line.
+
+Open Terminal
+
+Run the following commands.
+
+```
+ps -ax | grep AngelaDavies
+```
+
+Make a note of the Number to the left of the Screen. This is its PROCESS_ID.
+
+``` 
+sudo kill -9 PROCESS_ID
+```
+
+That should kill the program.
+
+Alternatively, open the raspberry pi start button. Go to Shutdown and click reboot this will reboot the Pi and relaunch the application.
 
 ### Manually running
 

@@ -5,8 +5,6 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const dateTime = require('node-datetime');
 var copyTo = require('pg-copy-streams').to;
-// var csvWriter = require('csv-write-stream');
-// var writer = csvWriter( { headers: ['id','volume','location','created_at','event']} );
 const fs = require('fs');
 
 
@@ -67,7 +65,6 @@ router.post('/api/v1/downloaddata', (req,res,next) => {
     
     var dt = dateTime.create();
     var formatted = dt.format('Y-m-d');
-<<<<<<< HEAD
     var directory = "/tmp/"+formatted+".csv";
     
     const query = {
@@ -76,36 +73,18 @@ router.post('/api/v1/downloaddata', (req,res,next) => {
     };
 
     pool.query(query, (err,result) => {
-=======
     var directory = __dirname + "/"+formatted+".csv";
     
     pool.query( "\copy logs TO '"+directory+"' CSV HEADER", (err,result) => {
->>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
         if(err) {
             console.log(err);
             return res.json({failed: err})
         }
-        
-<<<<<<< HEAD
-        // writer.pipe(fs.createWriteStream('out.csv'))
-        // console.log("Returned columns:", result.fields.map(function(f) { return f.name; }).join(', '));
-        
-        // for(var i = 0; i < result.rows.length; i++) {
-        //     writer.write(result.row[i]);
-        // }
-
-        console.log(result + " Downloaded File");
-        // setImmediate(emailCsvToOwner,1500,"");
-        // setTimeout(truncateTable,1500);
-        // writer.end();
-        return res.json({success: "Downloaded"});
-
-=======
         console.log(result + " Downloaded File");
         setImmediate(emailCsvToOwner,1500,"");
         setTimeout(truncateTable,1500);
         return res.json({success: "Downloaded"});
->>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
+
         pool.end()
     });
 });

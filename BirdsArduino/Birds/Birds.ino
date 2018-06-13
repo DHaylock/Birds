@@ -6,12 +6,9 @@ char messageFromPC[32] = {0};
 float floatFromPC = 0.0;
 String inData;
 
-<<<<<<< HEAD
 #define LED_BANK_1_PIN 10
 #define LED_BANK_2_PIN 11
 
-=======
->>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *myMotor = AFMS.getMotor(1);
 
@@ -44,11 +41,8 @@ void loop() {
             if (messageFromPC[0] == 'f'){
                 myMotor->run(FORWARD);
                 myMotor->setSpeed(int(floatFromPC));
-<<<<<<< HEAD
-		analogWrite(LED_BANK_1_PIN,int(floatFromPC));
-		analogWrite(LED_BANK_2_PIN,int(floatFromPC));
-=======
->>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
+				analogWrite(LED_BANK_1_PIN,int(floatFromPC));
+				analogWrite(LED_BANK_2_PIN,int(floatFromPC));
                 Serial.println("O");
             }
             else if (messageFromPC[0] == 'b'){
@@ -56,11 +50,8 @@ void loop() {
                 myMotor->setSpeed(int(floatFromPC));
             }
             else if (messageFromPC[0] == 's'){
-<<<<<<< HEAD
-		analogWrite(LED_BANK_1_PIN,0);
-		analogWrite(LED_BANK_2_PIN,0);
-=======
->>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
+				analogWrite(LED_BANK_1_PIN,0);
+				analogWrite(LED_BANK_2_PIN,0);
                 myMotor->run(RELEASE);
             } else {
               

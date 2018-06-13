@@ -17,7 +17,7 @@ const pool = new Pool({
     password: process.env.DATABASE_PASSWORD,
     port: 5432,
     connectionString: process.env.CONNECTION_STRING
-});
+}
 
 //----------------------------------------------------------------
 // * Email the Log to the Owner
@@ -67,6 +67,7 @@ router.post('/api/v1/downloaddata', (req,res,next) => {
     
     var dt = dateTime.create();
     var formatted = dt.format('Y-m-d');
+<<<<<<< HEAD
     var directory = "/tmp/"+formatted+".csv";
     
     const query = {
@@ -75,11 +76,17 @@ router.post('/api/v1/downloaddata', (req,res,next) => {
     };
 
     pool.query(query, (err,result) => {
+=======
+    var directory = __dirname + "/"+formatted+".csv";
+    
+    pool.query( "\copy logs TO '"+directory+"' CSV HEADER", (err,result) => {
+>>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
         if(err) {
             console.log(err);
             return res.json({failed: err})
         }
         
+<<<<<<< HEAD
         // writer.pipe(fs.createWriteStream('out.csv'))
         // console.log("Returned columns:", result.fields.map(function(f) { return f.name; }).join(', '));
         
@@ -93,6 +100,12 @@ router.post('/api/v1/downloaddata', (req,res,next) => {
         // writer.end();
         return res.json({success: "Downloaded"});
 
+=======
+        console.log(result + " Downloaded File");
+        setImmediate(emailCsvToOwner,1500,"");
+        setTimeout(truncateTable,1500);
+        return res.json({success: "Downloaded"});
+>>>>>>> 4537477758fbc738055e2b0a2b82e8e5447b6915
         pool.end()
     });
 });

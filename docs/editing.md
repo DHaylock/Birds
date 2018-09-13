@@ -6,9 +6,15 @@ No doubt at some point you will need to edit something. This guide will help you
 
 At some point you might want to put the Raspberry Pi on the Internet. You can either plug in a monitor, keyboard and mouse and do it through the GUI. Or with a little trick.
 
-On your laptop make a file called 
+Open Terminal
+
+`cd Desktop`
+
+Make a file called 
 
 `touch wpa_supplicant.conf`
+
+Double click the file.
 
 Add the Following to the File.
 

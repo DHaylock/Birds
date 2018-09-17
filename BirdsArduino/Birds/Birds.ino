@@ -8,6 +8,7 @@ String inData;
 
 #define LED_BANK_1_PIN 10
 #define LED_BANK_2_PIN 11
+#define MAX_MOTOR_SPEED 255
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *myMotor = AFMS.getMotor(1);
@@ -40,18 +41,18 @@ void loop() {
             
             if (messageFromPC[0] == 'f'){
                 myMotor->run(FORWARD);
-                myMotor->setSpeed(int(floatFromPC));
-				analogWrite(LED_BANK_1_PIN,int(floatFromPC));
-				analogWrite(LED_BANK_2_PIN,int(floatFromPC));
+                myMotor->setSpeed(constrain(int(floatFromPC),0,MAX_MOTOR_SPEED));
+				        analogWrite(LED_BANK_1_PIN,int(floatFromPC));
+				        analogWrite(LED_BANK_2_PIN,int(floatFromPC));
                 Serial.println("O");
             }
             else if (messageFromPC[0] == 'b'){
                 myMotor->run(BACKWARD);
-                myMotor->setSpeed(int(floatFromPC));
+                myMotor->setSpeed(constrain(int(floatFromPC),0,MAX_MOTOR_SPEED));
             }
             else if (messageFromPC[0] == 's'){
-				analogWrite(LED_BANK_1_PIN,0);
-				analogWrite(LED_BANK_2_PIN,0);
+        				analogWrite(LED_BANK_1_PIN,0);
+        				analogWrite(LED_BANK_2_PIN,0);
                 myMotor->run(RELEASE);
             } else {
               
